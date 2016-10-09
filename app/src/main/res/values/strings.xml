@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ManagePower</string>
+    <string name="light_label"> Light </string>
+    <string name="on_off"> ON/OFF </string>
+    <string name="set_time"> Set Time </string>
+    <string name="set_date"> Set Date </string>
+    <string name="on_timer"> On Timer </string>
+    <string name="off_timer"> Off Timer </string>
+</resources>

@@ -13,15 +13,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = (Button) findViewById(R.id.light);
+        Button profile_button = (Button) findViewById(R.id.profiles);
 
         // Capture button clicks
-        button.setOnClickListener(new View.OnClickListener() {
+        profile_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
 
                 // Start NewActivity.class
                 Intent nextIntent = new Intent(MainActivity.this,
-                        LightSettings.class);
+                        Profiles.class);
+                startActivity(nextIntent);
+            }
+        });
+
+        Button controls_button = (Button) findViewById(R.id.controls);
+
+        // Capture button clicks
+        controls_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+
+                // Start NewActivity.class
+                Intent nextIntent = new Intent(MainActivity.this,
+                        Controls.class);
                 startActivity(nextIntent);
             }
         });

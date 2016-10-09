@@ -15,9 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LightSettings" />
+        <activity android:name=".Controls" />
         <activity android:name=".DatePickerFragment" />
-        <activity android:name=".TimePickerFragment"></activity>
+        <activity android:name=".TimePickerFragment" />
+        <activity android:name=".Profiles"></activity>
     </application>
 
 </manifest>

@@ -5,12 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class LightSettings extends AppCompatActivity  {
+public class Controls extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_light_settings);
+        setContentView(R.layout.activity_controls);
     }
 
     public void showTimePickerDialog(View v) {

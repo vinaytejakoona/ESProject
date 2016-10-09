@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">ManagePower</string>
-    <string name="light_label"> Light </string>
+    <string name="light"> Light </string>
+    <string name="profiles"> Profiles </string>
+    <string name="profile1"> Profile 1 </string>
+    <string name="temperature"> Temperature </string>
+    <string name="humidity"> Humidity </string>
+    <string name="controls"> Controls </string>
     <string name="on_off"> ON/OFF </string>
     <string name="set_time"> Set Time </string>
     <string name="set_date"> Set Date </string>

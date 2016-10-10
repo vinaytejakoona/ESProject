@@ -22,4 +22,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/controls" />
+
+    <Button
+        android:text="@string/timers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/timers" />
 </LinearLayout>

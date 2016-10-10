@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class Controls extends AppCompatActivity  {
+public class ControlsActivity extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,12 +14,13 @@ public class Controls extends AppCompatActivity  {
     }
 
     public void showTimePickerDialog(View v) {
-        DialogFragment newFragment = new TimePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "timePicker");
+        DialogFragment ontime = new TimePickerFragment();
+        ontime.show(getSupportFragmentManager(), "timePicker");
     }
 
+
     public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+        DialogFragment ondate = new DatePickerFragment();
+        ondate.show(getSupportFragmentManager(), "datePicker");
     }
 }

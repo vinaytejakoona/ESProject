@@ -8,12 +8,18 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.apps.koona.managepower.Profiles"
+    tools:context="com.apps.koona.managepower.ProfilesActivity"
     android:orientation="vertical">
 
     <LinearLayout  android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
+        <Button
+            android:text="@string/new_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/new_profile" />
 
         <TextView
         android:text="@string/profile1"

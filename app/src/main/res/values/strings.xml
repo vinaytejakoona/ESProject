@@ -4,11 +4,15 @@
     <string name="profiles"> Profiles </string>
     <string name="profile1"> Profile 1 </string>
     <string name="temperature"> Temperature </string>
+    <string name="new_profile"> New Profile </string>
     <string name="humidity"> Humidity </string>
     <string name="controls"> Controls </string>
     <string name="on_off"> ON/OFF </string>
     <string name="set_time"> Set Time </string>
     <string name="set_date"> Set Date </string>
+    <string name="timers"> Timers </string>
     <string name="on_timer"> On Timer </string>
     <string name="off_timer"> Off Timer </string>
+    <string name="title_activity_timers">TimersActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

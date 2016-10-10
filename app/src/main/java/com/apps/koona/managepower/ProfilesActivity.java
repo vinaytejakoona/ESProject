@@ -54,7 +54,7 @@ public class ProfilesActivity extends AppCompatActivity {
 
        // ((MyApplication) this.getApplication()).setSomeVariable("foo");
 
-        GlobalApp globalApp = ((GlobalApp) this.getApplication()).getInstance();
+        GlobalApp globalApp = GlobalApp.getInstance();
 
     }
 

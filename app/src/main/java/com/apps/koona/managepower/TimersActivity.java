@@ -19,9 +19,7 @@ public class TimersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timers);
-
-        DatabaseHandler db  = ((GlobalApp) this.getApplication()).getDb();
-        List<Timer> timersList = db.getAllTimers();
+        List<Timer> timersList = GlobalApp.getInstance().getTimers();
 
 
         LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -38,7 +36,7 @@ public class TimersActivity extends AppCompatActivity {
 
             // fill in any details dynamically here
             textview = new TextView(this);
-            textview.setText(timersList.get(i).getDeviceId());
+            textview.setText(Integer.toString(timersList.get(i).getDeviceId()));
             layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
             // Add the text view to the parent layout

@@ -6,6 +6,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -104,6 +105,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // Inserting Row
         db.insert(TABLE_TIMERS, null, values);
+
+        Log.d("addtimer:date",timer.getCalendar().get(Calendar.YEAR)+"-"+timer.getCalendar().get(Calendar.MONTH)+"-"+timer.getCalendar().get(Calendar.DATE)+"-"+timer.getCalendar().get(Calendar.HOUR_OF_DAY)+"-"+timer.getCalendar().get(Calendar.MINUTE));
         Log.d("addTimer: ",values.get(KEY_MILLISECONDS).toString());
         db.close(); // Closing database connection
     }
@@ -165,8 +168,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 timer.setId(cursor.getInt(0));
                 timer.setOn_off(cursor.getInt(1));
                 timer.setDeviceId(cursor.getInt(2));
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(cursor.getInt(3));
+                Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+                calendar.setTimeInMillis(cursor.getLong(3));
                 timer.setCalendar(calendar);
                 timerList.add(timer);
             } while (cursor.moveToNext());

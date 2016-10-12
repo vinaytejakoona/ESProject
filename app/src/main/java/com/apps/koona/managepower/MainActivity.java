@@ -81,12 +81,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Log.d("Insert: ", "Inserting ..");
-        db.addProfile(new Profile("profile1", 96.2, 12.5));
+//        Log.d("Insert: ", "Inserting ..");
+//        db.addProfile(new Profile("profile1", 96.2, 12.5));
         db.dropTables();
         Log.d("Insert Timer: ", "Inserting ..");
-        db.addTimer(new Timer(1, 10, Calendar.getInstance(TimeZone.getTimeZone("UTC"))));
-        db.addTimer(new Timer(2, 14, Calendar.getInstance(TimeZone.getTimeZone("UTC"))));
+
+        //db.addTimer(new Timer(1, 10, Calendar.getInstance(TimeZone.getTimeZone("UTC"))));
+        //db.addTimer(new Timer(0, 14, Calendar.getInstance(TimeZone.getTimeZone("UTC"))));
 
         List<Profile> profiles = db.getAllProfiles();
         for (Profile p : profiles) {
@@ -96,11 +97,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        List<Timer> timers = db.getAllTimers();
-        for (Timer t : timers) {
-            String log = "Id: " + t.getId() + " ,on_off: " + t.getOn_off() + " ,Device ID: " + t.getDeviceId() + " ,time : " + t.getCalendar().toString();
-            Log.d("Name: ", log);
-        }
+
 
     }
 

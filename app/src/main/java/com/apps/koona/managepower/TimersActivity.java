@@ -39,6 +39,10 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
         dateviews = new ArrayList<EditText>();
         textviews = new ArrayList<TextView>();
 
+        for (Timer t : timersList) {
+            String log = "Id: " + t.getId() + " ,on_off: " + t.getOn_off() + " ,Device ID: " + t.getDeviceId() + " ,time : " + t.getCalendar().getTimeInMillis();
+            Log.d("start timers activity: ", log);
+        }
 
         LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = vi.inflate(R.layout.activity_timers, null);
@@ -75,7 +79,7 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
             dateview.setFocusable(false);
             dateview.setClickable(true);
             Calendar calendar=timersList.get(i).getCalendar();
-            dateview.setText(calendar.get(Calendar.DATE)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.YEAR));
+            dateview.setText(calendar.get(Calendar.DATE)+"-"+(calendar.get(Calendar.MONTH)+1)+"-"+calendar.get(Calendar.YEAR));
 
             dateview.setInputType(0x00000014);
             dateviews.add(dateview);
@@ -97,7 +101,7 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
             timeview.setId(i+5000);
             timeview.setFocusable(false);
             timeview.setClickable(true);
-            timeview.setText(calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE));
+            timeview.setText((calendar.get(Calendar.HOUR_OF_DAY))+":"+calendar.get(Calendar.MINUTE));
 
             timeview.setInputType(0x00000024);
 

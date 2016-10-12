@@ -12,7 +12,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 public class TimePickerFragment extends DialogFragment
-         {
+{
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -22,8 +22,11 @@ public class TimePickerFragment extends DialogFragment
         int minute = c.get(Calendar.MINUTE);
 
         // Create a new instance of TimePickerDialog and return it
-        return new TimePickerDialog(getActivity(), (TimersActivity)getActivity(), hour, minute,DateFormat.is24HourFormat(getActivity()));
-    }
+        if(this.getActivity().getClass().toString()=="TimersActivity")
+            return new TimePickerDialog(getActivity(), (TimersActivity)getActivity(), hour, minute,DateFormat.is24HourFormat(getActivity()));
+        else
+            return new TimePickerDialog(getActivity(), (AddNewTimer)getActivity(), hour, minute,DateFormat.is24HourFormat(getActivity()));
 
+    }
 
 }

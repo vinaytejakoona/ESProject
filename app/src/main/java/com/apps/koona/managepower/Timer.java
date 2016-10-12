@@ -1,6 +1,8 @@
 package com.apps.koona.managepower;
 
 
+import android.widget.EditText;
+
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -9,24 +11,7 @@ public class Timer {
     int id;
     int deviceId;
     Calendar calendar;
-    DatePickerFragment date;
-    TimePickerFragment time;
 
-    public DatePickerFragment getDate() {
-        return date;
-    }
-
-    public void setDate(DatePickerFragment date) {
-        this.date = date;
-    }
-
-    public TimePickerFragment getTime() {
-        return time;
-    }
-
-    public void setTime(TimePickerFragment time) {
-        this.time = time;
-    }
 
     public int getDeviceId() {
 
@@ -58,8 +43,8 @@ public class Timer {
     Timer(){
         on_off=1;
         numberOfTimers++;
-        this.calendar= Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        deviceId=-1;
+        this.calendar= Calendar.getInstance(TimeZone.getDefault());
+        deviceId=1;
     }
 
     Timer(int on_off,int deviceId,Calendar calendar){
@@ -68,6 +53,8 @@ public class Timer {
         this.on_off=on_off;
         this.deviceId=deviceId;
     }
+
+
 
 
     public void setId(int id) {

@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 //        db.addProfile(new Profile("profile1", 96.2, 12.5));
         db.dropTables();
         Log.d("Insert Timer: ", "Inserting ..");
-        db.addTimer(new Timer(1, 12, Calendar.getInstance(TimeZone.getTimeZone("UTC"))));
+        db.addTimer(new Timer(1, 10, Calendar.getInstance(TimeZone.getTimeZone("UTC"))));
         db.addTimer(new Timer(2, 14, Calendar.getInstance(TimeZone.getTimeZone("UTC"))));
 
 //        profiles = db.getAllProfiles();

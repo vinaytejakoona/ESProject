@@ -67,6 +67,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String CREATE_TIMERS_TABLE = "CREATE TABLE " + TABLE_TIMERS + "("
                 + KEY_TIMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ON_OFF + " INTEGER" + KEY_DEVICE_ID + " INTEGER "+ KEY_MILLISECONDS + " INTEGER)";
         db.execSQL(CREATE_TIMERS_TABLE);
+
     }
 
     // Upgrading database
@@ -77,6 +78,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIMERS);
         // Create tables again
         onCreate(db);
+        db.close();
     }
 
     void addProfile(Profile profile) {
@@ -102,6 +104,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // Inserting Row
         db.insert(TABLE_TIMERS, null, values);
+        Log.d("addTimer: ",values.get(KEY_MILLISECONDS).toString());
         db.close(); // Closing database connection
     }
 
@@ -116,6 +119,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         Profile profile = new Profile(cursor.getString(0), cursor.getDouble(1), cursor.getDouble(2));
 
+        db.close();
         return profile;
     }
 
@@ -142,6 +146,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
 
         // return contact list
+        db.close();
         return profileList;
     }
 
@@ -167,7 +172,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
-
+        db.close();
         return timerList;
     }
 
@@ -181,8 +186,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_HUMIDITY, profile.getHumidity());
 
         // updating row
-        return db.update(TABLE_PROFILES, values, KEY_PROFILE_ID + " = ?",
+         int r=db.update(TABLE_PROFILES, values, KEY_PROFILE_ID + " = ?",
                 new String[] { String.valueOf(profile.getProfileId()) });
+        db.close();
+        return r;
     }
 
     public void deleteProfile(Profile profile) {
@@ -203,8 +210,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
         // updating row
-        return db.update(TABLE_TIMERS, values, KEY_TIMER_ID + " = ?",
+        int r= db.update(TABLE_TIMERS, values, KEY_TIMER_ID + " = ?",
                 new String[] { String.valueOf(timer.getId()) });
+        db.close();
+        return r;
     }
 
 
@@ -220,7 +229,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
-
+        db.close();
         // return count
         return cursor.getCount();
     }
@@ -230,7 +239,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
-
+        db.close();
         // return count
         return cursor.getCount();
     }

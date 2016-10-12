@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GlobalApp globalApp=GlobalApp.getInstance();
+
 
         DatabaseHandler db = new DatabaseHandler(this);
 
@@ -48,6 +48,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button new_timer_button = (Button) findViewById(R.id.newtimer);
+
+        // Capture button clicks
+        new_timer_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+
+                // Start NewActivity.class
+                Intent nextIntent = new Intent(MainActivity.this,
+                        AddNewTimer.class);
+                startActivity(nextIntent);
+            }
+        });
+
         Button timers_button = (Button) findViewById(R.id.timers);
 
         // Capture button clicks
@@ -62,26 +75,28 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
     public void initialiseGlobalApp(DatabaseHandler db) {
 
 
 
-//        Log.d("Insert: ", "Inserting ..");
-//        db.addProfile(new Profile("profile1", 96.2, 12.5));
+        Log.d("Insert: ", "Inserting ..");
+        db.addProfile(new Profile("profile1", 96.2, 12.5));
         db.dropTables();
         Log.d("Insert Timer: ", "Inserting ..");
         db.addTimer(new Timer(1, 10, Calendar.getInstance(TimeZone.getTimeZone("UTC"))));
         db.addTimer(new Timer(2, 14, Calendar.getInstance(TimeZone.getTimeZone("UTC"))));
 
-//        profiles = db.getAllProfiles();
-//        for (Profile p : profiles) {
-//            String log = "Id: " + p.getProfileId() + " ,Name: " + p.getName() + " ,Temp: " + p.getTemperature() + " ,Humidity: " + p.getHumidity();
-//            // Writing Contacts to log
-//            Log.d("Name: ", log);
-//        }
+        List<Profile> profiles = db.getAllProfiles();
+        for (Profile p : profiles) {
+            String log = "Id: " + p.getProfileId() + " ,Name: " + p.getName() + " ,Temp: " + p.getTemperature() + " ,Humidity: " + p.getHumidity();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
+        }
 
-        GlobalApp.getInstance().setTimers(db.getAllTimers());
-        List<Timer> timers = GlobalApp.getInstance().getTimers();
+
+        List<Timer> timers = db.getAllTimers();
         for (Timer t : timers) {
             String log = "Id: " + t.getId() + " ,on_off: " + t.getOn_off() + " ,Device ID: " + t.getDeviceId() + " ,time : " + t.getCalendar().toString();
             Log.d("Name: ", log);

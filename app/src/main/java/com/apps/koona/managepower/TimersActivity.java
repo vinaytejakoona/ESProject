@@ -28,11 +28,13 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
     List<EditText>  dateviews;
     List<TextView> textviews;
     int currentID;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+    protected void onResume() {
+        super.onResume();
         setContentView(R.layout.activity_timers);
-        List<Timer> timersList = GlobalApp.getInstance().getTimers();
+
+        DatabaseHandler db= new DatabaseHandler(getApplicationContext());
+        List<Timer> timersList = db.getAllTimers();
         timerviews = new ArrayList<EditText>();
         dateviews = new ArrayList<EditText>();
         textviews = new ArrayList<TextView>();
@@ -46,7 +48,8 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
         // insert into main view
         ViewGroup insertPoint = (ViewGroup) findViewById(R.id.timersList);
 
-        TextView textview;
+        TextView devicenameview;
+        TextView onoffview;
         EditText dateview;
         EditText timeview;
         LinearLayout.LayoutParams layoutParams;
@@ -58,9 +61,9 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
             // fill in any details dynamically here
 
 
-            textview = new TextView(this);
+            devicenameview = new TextView(this);
 
-            textview.setText(Integer.toString(timersList.get(i).getDeviceId()));
+            devicenameview.setText(Integer.toString(timersList.get(i).getDeviceId()));
             layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
             // Add the text view to the parent layout
@@ -71,6 +74,8 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
             dateview.setId(i);
             dateview.setFocusable(false);
             dateview.setClickable(true);
+            Calendar calendar=timersList.get(i).getCalendar();
+            dateview.setText(calendar.get(Calendar.DATE)+"-"+calendar.get(Calendar.MONTH)+"-"+calendar.get(Calendar.YEAR));
 
             dateview.setInputType(0x00000014);
             dateviews.add(dateview);
@@ -92,6 +97,7 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
             timeview.setId(i+5000);
             timeview.setFocusable(false);
             timeview.setClickable(true);
+            timeview.setText(calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE));
 
             timeview.setInputType(0x00000024);
 
@@ -108,7 +114,7 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
             LinearLayout linearLayout = new LinearLayout(this);
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
             //linearLayout.setId(i);
-            linearLayout.addView(textview);
+            linearLayout.addView(devicenameview);
             linearLayout.addView(dateview);
             linearLayout.addView(timeview);
             insertPoint.addView(linearLayout,layoutParams);

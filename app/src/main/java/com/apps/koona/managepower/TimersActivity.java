@@ -11,9 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -56,6 +60,8 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
         TextView onoffview;
         EditText dateview;
         EditText timeview;
+        Button button;
+        Spinner on_off_spinner;
         LinearLayout.LayoutParams layoutParams;
 
         DatePicker datePickerView;
@@ -64,8 +70,43 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
 
             // fill in any details dynamically here
 
+            on_off_spinner = new Spinner(this);
+            List<String> on_off_options = new ArrayList<String>();
+            on_off_options.add("ON");
+            on_off_options.add("OFF");
 
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, on_off_options);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            on_off_spinner.setAdapter(dataAdapter);
+
+            on_off_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+                public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                    Toast.makeText(parent.getContext(),
+                            "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub
+                }
+            });
             devicenameview = new TextView(this);
+            button = new Button(this);
+            button.setText("del");
+            button.setId(i+9000);
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ViewGroup layout = (ViewGroup) v.getParent();
+                    ViewGroup parent = (ViewGroup) layout.getParent();
+                    if(null!=layout) //for safety only  as you are doing onClick
+                        parent.removeView(layout);
+                }
+            });
+
+            //button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.,null,null,null);
 
             devicenameview.setText(Integer.toString(timersList.get(i).getDeviceId()));
             layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -119,8 +160,10 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
             //linearLayout.setId(i);
             linearLayout.addView(devicenameview);
+            linearLayout.addView(on_off_spinner);
             linearLayout.addView(dateview);
             linearLayout.addView(timeview);
+            linearLayout.addView(button);
             insertPoint.addView(linearLayout,layoutParams);
 
         }

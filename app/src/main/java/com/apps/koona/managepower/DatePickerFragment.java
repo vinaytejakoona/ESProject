@@ -25,7 +25,8 @@ public class DatePickerFragment extends DialogFragment {
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         // Create a new instance of DatePickerDialog and return it
-        if(this.getActivity().getClass().toString()=="TimersActivity")
+        Log.d("callfrom: ",getActivity().getClass().getSimpleName()+" ");
+        if(getActivity().getClass().getSimpleName().equals("TimersActivity"))
             return new DatePickerDialog(getActivity(),(TimersActivity)getActivity(), year, month, day);
         else
             return new DatePickerDialog(getActivity(),(AddNewTimer)getActivity(), year, month, day);

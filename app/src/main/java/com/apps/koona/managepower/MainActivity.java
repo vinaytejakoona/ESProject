@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        Log.d("Insert: ", "Inserting ..");
 //        db.addProfile(new Profile("profile1", 96.2, 12.5));
-        db.dropTables();
+//        db.dropTables();
         Log.d("Insert Timer: ", "Inserting ..");
 
         //db.addTimer(new Timer(1, 10, Calendar.getInstance(TimeZone.getTimeZone("UTC"))));

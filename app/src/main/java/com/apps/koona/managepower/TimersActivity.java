@@ -48,12 +48,7 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
             Log.d("start timers activity: ", log);
         }
 
-        LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = vi.inflate(R.layout.activity_timers, null);
 
-
-
-        // insert into main view
         ViewGroup insertPoint = (ViewGroup) findViewById(R.id.timersList);
 
         TextView devicenameview;
@@ -62,13 +57,14 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
         EditText timeview;
         Button button;
         Spinner on_off_spinner;
-        LinearLayout.LayoutParams layoutParams;
-
-        DatePicker datePickerView;
+        LinearLayout.LayoutParams layoutParams= new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         for (int i = 0; i < timersList.size(); i++){
 
             // fill in any details dynamically here
+
+            if(db.getDevice(timersList.get(i).getDeviceId())==null)
+                continue;
 
             on_off_spinner = new Spinner(this);
             List<String> on_off_options = new ArrayList<String>();
@@ -78,6 +74,11 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, on_off_options);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             on_off_spinner.setAdapter(dataAdapter);
+            if(timersList.get(i).getOn_off()==1){
+                on_off_spinner.setSelection(0);
+            }
+            else
+                on_off_spinner.setSelection(1);
 
             on_off_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -92,6 +93,7 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
                 }
             });
             devicenameview = new TextView(this);
+            devicenameview.setMinEms(2);
             button = new Button(this);
             button.setText("del");
             button.setId(timersList.get(i).getId()+9000);
@@ -111,8 +113,10 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
 
             //button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.,null,null,null);
 
-            devicenameview.setText(Integer.toString(timersList.get(i).getDeviceId()));
-            layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+
+
+            devicenameview.setText(db.getDevice(timersList.get(i).getDeviceId()).getDeviceLabel());
 
             // Add the text view to the parent layout
             dateview = new EditText(this);

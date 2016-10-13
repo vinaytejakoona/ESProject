@@ -37,7 +37,9 @@
             android:inputType="time"
             android:ems="10"
             android:id="@+id/settime"
-            android:hint="@string/set_time" />
+            android:hint="@string/set_time"
+            android:focusableInTouchMode="false"
+            android:focusable="false" />
 
         <EditText
             android:layout_width="match_parent"
@@ -45,7 +47,9 @@
             android:inputType="date"
             android:ems="10"
             android:id="@+id/setdate"
-            android:hint="@string/set_date" />
+            android:hint="@string/set_date"
+            android:focusableInTouchMode="false"
+            android:focusable="false" />
 
         <Button
             android:text="@string/add_timer"

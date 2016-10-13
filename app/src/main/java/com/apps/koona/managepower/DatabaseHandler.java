@@ -25,6 +25,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Contacts table name
     private static final String TABLE_PROFILES = "Profiles";
     private static final String TABLE_TIMERS = "Timers";
+    private static final String TABLE_DEVICES = "Devices";
 
     // Contacts Table Columns names
     private static final String KEY_PROFILE_ID = "profile_id";
@@ -37,6 +38,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_DEVICE_ID = "device_id";
     private static final String KEY_MILLISECONDS = "milliseconds";
 
+
+    private static final String KEY_DEVICE_LABEL= "device_label";
+
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -45,15 +49,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROFILES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIMERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEVICES);
 
         String CREATE_PROFILES_TABLE = "CREATE TABLE " + TABLE_PROFILES + "("
                 + KEY_PROFILE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + " TEXT,"
                 + KEY_TEMPERATURE + " DOUBLE" + KEY_HUMIDITY + " DOUBLE)";
         db.execSQL(CREATE_PROFILES_TABLE);
+
         Log.d("create timers table","befor....");
         String CREATE_TIMERS_TABLE = "CREATE TABLE " + TABLE_TIMERS + "("
                 + KEY_TIMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ON_OFF + " INTEGER," + KEY_DEVICE_ID + " INTEGER,"+ KEY_MILLISECONDS + " INTEGER)";
         db.execSQL(CREATE_TIMERS_TABLE);
+
+        String CREATE_DEVICES_TABLE = "CREATE TABLE " + TABLE_DEVICES + "("
+                + KEY_DEVICE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DEVICE_LABEL + " TEXT)";
+        db.execSQL(CREATE_DEVICES_TABLE);
         db.close(); // Closing database connection
     }
 
@@ -68,6 +78,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String CREATE_TIMERS_TABLE = "CREATE TABLE " + TABLE_TIMERS + "("
                 + KEY_TIMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ON_OFF + " INTEGER" + KEY_DEVICE_ID + " INTEGER "+ KEY_MILLISECONDS + " INTEGER)";
         db.execSQL(CREATE_TIMERS_TABLE);
+        String CREATE_DEVICES_TABLE = "CREATE TABLE " + TABLE_DEVICES + "("
+                + KEY_DEVICE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DEVICE_LABEL + " TEXT)";
+        db.execSQL(CREATE_DEVICES_TABLE);
 
     }
 
@@ -77,6 +90,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROFILES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIMERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEVICES);
         // Create tables again
         onCreate(db);
         db.close();
@@ -92,6 +106,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // Inserting Row
         db.insert(TABLE_PROFILES, null, values);
+        db.close(); // Closing database connection
+    }
+
+    void addDevice(Device device) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_DEVICE_LABEL, device.getDeviceLabel());
+
+        // Inserting Row
+        db.insert(TABLE_DEVICES, null, values);
         db.close(); // Closing database connection
     }
 
@@ -124,6 +149,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.close();
         return profile;
+    }
+
+    Device getDevice(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_DEVICES, new String[] { KEY_DEVICE_LABEL }, KEY_DEVICE_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        else
+            return null;
+
+        Device device = new Device(cursor.getString(0));
+
+        db.close();
+        return device;
     }
 
     public List<Profile> getAllProfiles() {
@@ -180,6 +221,30 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
+    public List<Device> getAllDevices() {
+        List<Device> deviceList = new ArrayList<Device>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_DEVICES;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Device device = new Device();
+                device.setDeviceId(cursor.getInt(0));
+                device.setDeviceLabel(cursor.getString(1));
+                Log.d("db..get all devices: ",device.getDeviceLabel());
+                deviceList.add(device);
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+        return deviceList;
+    }
+
+
     public int updateProfile(Profile profile) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -220,10 +285,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-    public void deleteTimer(int timerid) {
+    public void deleteTimer(int timerId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_TIMERS, KEY_TIMER_ID + " = ?",
-                new String[] { String.valueOf(timerid) });
+                new String[] { String.valueOf(timerId) });
+        db.close();
+    }
+
+    public void deleteDevice(int deviceId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_DEVICES, KEY_DEVICE_ID + " = ?",
+                new String[] { String.valueOf(deviceId) });
         db.close();
     }
 

@@ -15,12 +15,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ControlsActivity" />
         <activity android:name=".DatePickerFragment" />
         <activity android:name=".TimePickerFragment" />
         <activity android:name=".ProfilesActivity" />
         <activity android:name=".TimersActivity" />
-        <activity android:name=".AddNewTimer"></activity>
+        <activity android:name=".AddNewTimer" />
+        <activity android:name=".DevicesActivity" />
+        <activity android:name=".AddNewDevice"></activity>
     </application>
 
 </manifest>

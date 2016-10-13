@@ -32,39 +32,18 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
     EditText settimeview;
     EditText setdateview;
     Calendar calendar;
+    List<Device> deviceList;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onResume() {
+        super.onResume();
         setContentView(R.layout.activity_add_new_timer);
 
         calendar = Calendar.getInstance(TimeZone.getDefault());
 
         settimeview=(EditText) findViewById(R.id.settime);
         setdateview=(EditText) findViewById(R.id.setdate);
-
-        settimeview.setOnTouchListener(new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int inType = settimeview.getInputType(); // backup the input type
-                settimeview.setInputType(InputType.TYPE_NULL); // disable soft input
-                settimeview.onTouchEvent(event); // call native handler
-                settimeview.setInputType(inType); // restore input type
-                return true; // consume touch even
-            }
-        });
-
-        setdateview.setOnTouchListener(new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int inType = setdateview.getInputType(); // backup the input type
-                setdateview.setInputType(InputType.TYPE_NULL); // disable soft input
-                setdateview.onTouchEvent(event); // call native handler
-                setdateview.setInputType(inType); // restore input type
-                return true; // consume touch even
-            }
-        });
 
         setdateview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,8 +68,11 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
 
         device_spinner = (Spinner) findViewById(R.id.device_names);
         List<String> device_names = new ArrayList<String>();
-        device_names.add("Light");
-        device_names.add("fan");
+        deviceList = new ArrayList<Device>();
+        deviceList=db.getAllDevices();
+        for(Device d:deviceList){
+            device_names.add(d.getDeviceLabel());
+        }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, device_names);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -131,19 +113,26 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
             public void onClick(View arg0) {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 int on_off;
-                if(on_off_spinner.getSelectedItem().toString()=="ON")
+                if(on_off_spinner.getSelectedItem().toString().equals("ON"))
                     on_off=1;
                 else
                     on_off=0;
 
-                int device_id=1;
+                int device_id=-1;
+                String selectedDeviceLabel=device_spinner.getSelectedItem().toString();
+                for(Device d:deviceList){
+                    if(selectedDeviceLabel.equals(d.getDeviceLabel()))
+                        device_id=d.getDeviceId();
+                }
+                if(device_id==-1)
+                    return;
 
                 Timer timer = new Timer(on_off,device_id,calendar);
                 db.addTimer(timer);
                 Toast.makeText(getApplicationContext(),
                         "New Timer Added",
                         Toast.LENGTH_SHORT).show();
-                Log.d("AddnewTimer: ",timer.getCalendar().getTimeInMillis()+" ");
+                Log.d("AddnewTimer: "+on_off," "+timer.getCalendar().getTimeInMillis()+" ");
 
             }
         });
@@ -158,7 +147,7 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
         calendar.set(Calendar.DATE,day);
         SimpleDateFormat formatter=new SimpleDateFormat("dd-MM-yyyy");
         setdateview.setText(formatter.format(calendar.getTime()));
-        Toast.makeText(getApplicationContext(), day+"-"+month+"-"+year, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), day+"-"+month+"-"+year, Toast.LENGTH_SHORT).show();
     }
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -168,6 +157,6 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
         calendar.set(Calendar.MINUTE,minute);
         SimpleDateFormat formatter=new SimpleDateFormat("HH:mm");
         settimeview.setText(formatter.format(calendar.getTime()));
-        Toast.makeText(getApplicationContext(), "ON Time is set", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "ON Time is set", Toast.LENGTH_SHORT).show();
     }
 }

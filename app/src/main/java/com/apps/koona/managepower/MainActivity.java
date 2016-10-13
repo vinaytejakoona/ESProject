@@ -35,15 +35,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button controls_button = (Button) findViewById(R.id.controls);
+        Button devices_button = (Button) findViewById(R.id.devices);
 
         // Capture button clicks
-        controls_button.setOnClickListener(new View.OnClickListener() {
+        devices_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
 
                 // Start NewActivity.class
                 Intent nextIntent = new Intent(MainActivity.this,
-                        ControlsActivity.class);
+                        DevicesActivity.class);
+                startActivity(nextIntent);
+            }
+        });
+
+        Button add_new_device_button = (Button) findViewById(R.id.newdevice);
+
+        // Capture button clicks
+        add_new_device_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+
+                // Start NewActivity.class
+                Intent nextIntent = new Intent(MainActivity.this,
+                        AddNewDevice.class);
                 startActivity(nextIntent);
             }
         });

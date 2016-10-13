@@ -18,10 +18,16 @@
         android:id="@+id/profiles" />
 
     <Button
-        android:text="@string/controls"
+        android:text="@string/devices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/controls" />
+        android:id="@+id/devices" />
+
+    <Button
+        android:text="@string/add_device"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/newdevice" />
 
     <Button
         android:text="@string/timers"
@@ -34,4 +40,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newtimer" />
+
 </LinearLayout>

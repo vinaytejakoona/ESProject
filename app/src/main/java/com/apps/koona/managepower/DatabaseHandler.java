@@ -220,10 +220,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-    public void deleteTimer(Timer timer) {
+    public void deleteTimer(int timerid) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_TIMERS, KEY_TIMER_ID + " = ?",
-                new String[] { String.valueOf(timer.getId()) });
+                new String[] { String.valueOf(timerid) });
         db.close();
     }
 

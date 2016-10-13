@@ -94,11 +94,14 @@ public class TimersActivity extends AppCompatActivity  implements DatePickerDial
             devicenameview = new TextView(this);
             button = new Button(this);
             button.setText("del");
-            button.setId(i+9000);
+            button.setId(timersList.get(i).getId()+9000);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+                    int timerid=v.getId()-9000;
+                    db.deleteTimer(timerid);
                     ViewGroup layout = (ViewGroup) v.getParent();
                     ViewGroup parent = (ViewGroup) layout.getParent();
                     if(null!=layout) //for safety only  as you are doing onClick

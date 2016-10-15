@@ -111,6 +111,17 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
         // Capture button clicks
         add_timer_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
+
+                if( setdateview.getText().toString().trim().equals("")){
+
+                    setdateview.setError( "date is required!" );
+                    return;
+                }
+                if( settimeview.getText().toString().trim().equals("")){
+
+                    settimeview.setError( "time is required!" );
+                    return;
+                }
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                 int on_off;
                 if(on_off_spinner.getSelectedItem().toString().equals("ON"))
@@ -128,6 +139,7 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
                     return;
 
                 Timer timer = new Timer(on_off,device_id,calendar);
+                Log.d("Add new Timer: "+on_off," "+timer.getDeviceId()+" ");
                 db.addTimer(timer);
                 Toast.makeText(getApplicationContext(),
                         "New Timer Added",

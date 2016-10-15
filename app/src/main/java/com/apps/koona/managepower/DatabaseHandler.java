@@ -45,6 +45,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    public void onOpen(SQLiteDatabase db){
+        db.execSQL("PRAGMA foreign_keys=ON");
+    }
+
     public void dropTables(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROFILES);
@@ -57,13 +61,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_PROFILES_TABLE);
 
         Log.d("create timers table","befor....");
-        String CREATE_TIMERS_TABLE = "CREATE TABLE " + TABLE_TIMERS + "("
-                + KEY_TIMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ON_OFF + " INTEGER," + KEY_DEVICE_ID + " INTEGER,"+ KEY_MILLISECONDS + " INTEGER)";
-        db.execSQL(CREATE_TIMERS_TABLE);
-
         String CREATE_DEVICES_TABLE = "CREATE TABLE " + TABLE_DEVICES + "("
                 + KEY_DEVICE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DEVICE_LABEL + " TEXT)";
         db.execSQL(CREATE_DEVICES_TABLE);
+
+        String CREATE_TIMERS_TABLE = "CREATE TABLE " + TABLE_TIMERS + "("
+                + KEY_TIMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_ON_OFF + " INTEGER," + KEY_DEVICE_ID + " INTEGER REFERENCES "+TABLE_DEVICES +"("+KEY_DEVICE_ID+") ON DELETE CASCADE,"+ KEY_MILLISECONDS + " INTEGER )";
+
+        db.execSQL(CREATE_TIMERS_TABLE);
         db.close(); // Closing database connection
     }
 
@@ -75,12 +80,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_TEMPERATURE + " DOUBLE" + KEY_HUMIDITY + " DOUBLE)";
         db.execSQL(CREATE_PROFILES_TABLE);
         Log.d("create timers table","befor....");
-        String CREATE_TIMERS_TABLE = "CREATE TABLE " + TABLE_TIMERS + "("
-                + KEY_TIMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ON_OFF + " INTEGER" + KEY_DEVICE_ID + " INTEGER "+ KEY_MILLISECONDS + " INTEGER)";
-        db.execSQL(CREATE_TIMERS_TABLE);
+
+
         String CREATE_DEVICES_TABLE = "CREATE TABLE " + TABLE_DEVICES + "("
                 + KEY_DEVICE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DEVICE_LABEL + " TEXT)";
         db.execSQL(CREATE_DEVICES_TABLE);
+
+        String CREATE_TIMERS_TABLE = "CREATE TABLE " + TABLE_TIMERS + "("
+                + KEY_TIMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_ON_OFF + " INTEGER," + KEY_DEVICE_ID + " INTEGER REFERENCES "+TABLE_DEVICES +"("+KEY_DEVICE_ID+") ON DELETE CASCADE,"+ KEY_MILLISECONDS + " INTEGER )";
+
+        db.execSQL(CREATE_TIMERS_TABLE);
 
     }
 

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+    <TextView
+        android:text="@string/light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/light"
+        android:textSize="22sp" />
+
+    <Switch
+            android:text="@string/on_off"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lightSwitch" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="@string/on_timer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView2"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/set_time"
+                    android:onClick="showTimePickerDialog"
+                    android:layout_weight="1"
+                    android:id="@+id/setOnTime" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/set_date"
+                    android:onClick="showDatePickerDialog"
+                    android:layout_weight="1"
+                    android:id="@+id/setOnDate" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/off_timer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/set_time"
+                android:onClick="showTimePickerDialog"
+                android:layout_weight="1"
+                android:id="@+id/setOffTime" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/set_date"
+                android:onClick="showDatePickerDialog"
+                android:layout_weight="1"
+                android:id="@+id/setOffDate" />
+
+            </LinearLayout>
+    </LinearLayout>
+</ScrollView>

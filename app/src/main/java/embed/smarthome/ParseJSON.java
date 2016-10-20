@@ -4,37 +4,28 @@ package embed.smarthome;
  * Created by anbarasan on 9/10/16.
  */
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ParseJSON {
-    public static String[] ids;
-    public static String[] Current1s;
-    public static String[] Current2s;
-    public static String[] Current3s;
-    public static String[] Voltages;
-    public static String[] Frequencys;
-    public static String[] Phase1s;
-    public static String[] Phase2s;
-    public static String[] Phase3s;
+    public static String[] temperatures;
+    public static String[] timestamps;
+    public static String[] milliseconds;
 
     public static final String JSON_ARRAY = "result";
-    public static final String KEY_ID = "id";
-    public static final String KEY_CURRENT1 = "Current1";
-    public static final String KEY_CURRENT2 = "Current2";
-    public static final String KEY_CURRENT3 = "Current3";
-    public static final String KEY_VOLTAGE = "Voltage";
-    public static final String KEY_FREQUENCY = "frequency";
-    public static final String KEY_PHASE1 = "Phase1";
-    public static final String KEY_PHASE2 = "Phase2";
-    public static final String KEY_PHASE3 = "Phase3";
+    public static final String KEY_TEMPERATURE = "temperature";
+    public static final String KEY_TIMESTAMP = "timestamp";
+    public static final String KEY_MILLISECONDS = "milliseconds";
 
-    private JSONArray users = null;
+    private JSONArray result = null;
 
     private String json;
 
     public ParseJSON(String json){
+        Log.d("ParseJson ",json);
         this.json = json;
     }
 
@@ -42,30 +33,23 @@ public class ParseJSON {
         JSONObject jsonObject=null;
         try {
             jsonObject = new JSONObject(json);
-            users = jsonObject.getJSONArray(JSON_ARRAY);
+            //jsonObject = new JSONObject("{result:[{\"temperature\":\"25\",\"milliseconds\":\"1\",\"timestamp\":\"2016-10-19 23:18:20\"},{\"temperature\":\"25\",\"milliseconds\":\"2\",\"timestamp\":\"2016-10-19 23:21:02\"}]}");
+            result = jsonObject.getJSONArray(JSON_ARRAY);
 
-            ids = new String[users.length()];
-            Current1s = new String[users.length()];
-            Current2s = new String[users.length()];
-            Current3s = new String[users.length()];
-            Voltages = new String[users.length()];
-            Frequencys = new String[users.length()];
-            Phase1s = new String[users.length()];
-            Phase2s = new String[users.length()];
-            Phase3s = new String[users.length()];
+            temperatures = new String[result.length()];
+            timestamps = new String[result.length()];
+            milliseconds = new String[result.length()];
 
-            for(int i=0;i<users.length();i++){
-                JSONObject jo = users.getJSONObject(i);
-                ids[i] = jo.getString(KEY_ID);
-                Current1s[i] = jo.getString(KEY_CURRENT1);
-                Current2s[i] = jo.getString(KEY_CURRENT2);
-                Current3s[i] = jo.getString(KEY_CURRENT3);
-                Voltages[i] = jo.getString(KEY_VOLTAGE);
-                Frequencys[i] = jo.getString(KEY_FREQUENCY);
-                Phase1s[i] = jo.getString(KEY_PHASE1);
-                Phase2s[i] = jo.getString(KEY_PHASE2);
-                Phase3s[i] = jo.getString(KEY_PHASE3);
+
+            for(int i=0;i<result.length();i++){
+                JSONObject jo = result.getJSONObject(i);
+                temperatures[i] = jo.getString(KEY_TEMPERATURE);
+                timestamps[i] = jo.getString(KEY_TIMESTAMP);
+                milliseconds[i] = jo.getString(KEY_MILLISECONDS);
+
             }
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

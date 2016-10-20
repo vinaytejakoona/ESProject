@@ -62,7 +62,7 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
     Calendar calendar;
     List<Device> deviceList;
 
-    private static final String REGISTER_URL = "http://192.168.1.104/dbConnect.php";
+    private static final String REGISTER_URL = "http://192.168.43.89/dbConnect.php";
 
     public static final String KEY_DEVICE_ID = "device_id_val";
     public static final String KEY_DEVICE_NAME = "device_name";

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DevicesActivity extends AppCompatActivity {
-    private static final String REGISTER_URL = "http://192.168.1.104/OnOff.php";
+    private static final String REGISTER_URL = "http://192.168.43.89/OnOff.php";
 
     public static final String KEY_DEVICE_ID = "device_id";
     public static final String KEY_ON_OFF = "on_off";

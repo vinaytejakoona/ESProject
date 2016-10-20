@@ -8,6 +8,8 @@
     <string name="humidity"> Humidity </string>
     <string name="devices"> Devices </string>
     <string name="on_off"> ON/OFF </string>
+    <string name="timestamp"> TimeStamp</string>
+    <string name="millisecond"> MilliSeconds</string>
     <string name="set_time"> Set Time </string>
     <string name="set_date"> Set Date </string>
     <string name="timers"> Timers </string>

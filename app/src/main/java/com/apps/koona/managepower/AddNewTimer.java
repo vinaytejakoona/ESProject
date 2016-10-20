@@ -62,7 +62,7 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
     Calendar calendar;
     List<Device> deviceList;
 
-    private static final String REGISTER_URL = "http://192.168.43.89/dbConnect.php";
+    private static final String REGISTER_URL = "http://192.168.1.104/dbConnect.php";
 
     public static final String KEY_DEVICE_ID = "device_id_val";
     public static final String KEY_DEVICE_NAME = "device_name";
@@ -179,9 +179,9 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
                 Timer timer = new Timer(on_off,device_id,calendar);
                 Log.d("Add new Timer: "+on_off," "+timer.getDeviceId()+" ");
                 db.addTimer(timer);
-                Toast.makeText(getApplicationContext(),
-                        "New Timer Added",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),
+//                        "New Timer Added",
+//                        Toast.LENGTH_SHORT).show();
                 Log.d("AddnewTimer: "+on_off," "+timer.getCalendar().getTimeInMillis()+" ");
 
 
@@ -218,6 +218,7 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
                 };
                 RequestQueue requestQueue = Volley.newRequestQueue(AddNewTimer.this);
                 requestQueue.add(stringRequest);
+                Log.d("on add ","request sent to server : dbConnect.php");
 
             }
         });

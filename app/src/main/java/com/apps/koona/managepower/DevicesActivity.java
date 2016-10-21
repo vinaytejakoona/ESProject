@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DevicesActivity extends AppCompatActivity {
-    private static final String REGISTER_URL = "http://192.168.1.101/OnOff.php";
+    private String REGISTER_URL;
 
     public static final String KEY_DEVICE_ID = "device_id";
     public static final String KEY_ON_OFF = "on_off";
@@ -38,6 +38,10 @@ public class DevicesActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setContentView(R.layout.activity_devices);
+
+        String ipaddr = getResources().getString(R.string.ipaddr);
+        REGISTER_URL = "http://"+ipaddr+"/OnOff.php";
+
         Log.d("devices activity","");
         DatabaseHandler db= new DatabaseHandler(getApplicationContext());
         List<Device> devicesList = db.getAllDevices();

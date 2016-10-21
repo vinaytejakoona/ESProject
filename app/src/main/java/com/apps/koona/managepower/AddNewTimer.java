@@ -62,7 +62,7 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
     Calendar calendar;
     List<Device> deviceList;
 
-    private static final String REGISTER_URL = "http://192.168.1.101/dbConnect.php";
+    private String REGISTER_URL;
 
     public static final String KEY_DEVICE_ID = "device_id_val";
     public static final String KEY_DEVICE_NAME = "device_name";
@@ -78,9 +78,12 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
         super.onResume();
         setContentView(R.layout.activity_add_new_timer);
 
+        String ipaddr = getResources().getString(R.string.ipaddr);
+        REGISTER_URL = "http://"+ipaddr+"/dbConnect.php";
+
         calendar = Calendar.getInstance(TimeZone.getDefault());
 
-        settimeview=(EditText) findViewById(settime);
+        settimeview=(EditText) findViewById(R.id.settime);
         setdateview=(EditText) findViewById(R.id.setdate);
 
         setdateview.setOnClickListener(new View.OnClickListener() {
@@ -118,9 +121,9 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
 
         device_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                Toast.makeText(parent.getContext(),
-                        "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(parent.getContext(),
+//                        "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
+//                        Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -132,9 +135,9 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
 
         on_off_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                Toast.makeText(parent.getContext(),
-                        "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(parent.getContext(),
+//                        "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
+//                        Toast.LENGTH_SHORT).show();
 
             }
 
@@ -195,7 +198,7 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Toast.makeText(AddNewTimer.this,response,Toast.LENGTH_LONG).show();
+                                Toast.makeText(AddNewTimer.this,response,Toast.LENGTH_SHORT).show();
                             }
                         },
                         new Response.ErrorListener() {

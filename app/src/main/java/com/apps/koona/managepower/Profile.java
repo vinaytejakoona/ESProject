@@ -8,10 +8,6 @@ public class Profile {
     double humidity;
     String name;
     int profileId;
-    SeekBar TemperatureSeekBar;
-    SeekBar HumiditySeekBar;
-    TextView TemperatureValue;
-    TextView HumidityValue;
 
     static int numberOfProfiles=0;
     Profile(){

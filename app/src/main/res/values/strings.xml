@@ -1,10 +1,10 @@
 <resources>
+    <string name="ipaddr"> 192.168.1.101 </string>
     <string name="app_name">ManagePower</string>
     <string name="light"> Light </string>
-    <string name="profiles"> Profiles </string>
-    <string name="profile1"> Profile 1 </string>
+    <string name="profile"> Profile </string>
     <string name="temperature"> Temperature </string>
-    <string name="new_profile"> New Profile </string>
+    <string name="set_profile"> Set Profile </string>
     <string name="humidity"> Humidity </string>
     <string name="devices"> Devices </string>
     <string name="on_off"> ON/OFF </string>

@@ -1,6 +1,9 @@
 package com.apps.koona.managepower;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,11 +26,9 @@ import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String JSON_URL = "http://192.168.1.101/LiveData.php";
+    public String JSON_URL;
 
     private Button refresh_button;
-
-
 
     //private ListView listView;
 
@@ -40,11 +41,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String ipaddr = getResources().getString(R.string.ipaddr);
+        JSON_URL = "http://"+ipaddr+"/LiveData.php";
+
         refresh_button = (Button) findViewById(R.id.buttonGet);
 
         refresh_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                sendRequest();
+
+                if(isNetworkAvailable()){
+                    sendRequest();
+                }
+                else{
+                    Toast.makeText(MainActivity.this,"network not available",Toast.LENGTH_LONG).show();
+                }
+
                // showJSON("{\"result\":[{\"temperature\":\"12\",\"milliseconds\":\"11\",\"timestamp\":\"2016-10-20 11:10:59\",\"humidity\":\"17\"}]}");
                 // Start NewActivity.class
                 // Intent nextIntent = new Intent(MainActivity.this,ProfilesActivity.class);
@@ -67,20 +78,23 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseHandler db = new DatabaseHandler(this);
 
-        initialiseGlobalApp(db);
+
         Button profile_button = (Button) findViewById(R.id.profiles);
 
         // Capture button clicks
         profile_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
 
-                // Start NewActivity.class
-               // Intent nextIntent = new Intent(MainActivity.this,ProfilesActivity.class);
-               // startActivity(nextIntent);
+                 //Start NewActivity.class
+                Intent nextIntent = new Intent(MainActivity.this,ProfilesActivity.class);
+                startActivity(nextIntent);
             }
         });
 
         Button devices_button = (Button) findViewById(R.id.devices);
+
+
+
 
         // Capture button clicks
         devices_button.setOnClickListener(new View.OnClickListener() {
@@ -134,26 +148,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    public void initialiseGlobalApp(DatabaseHandler db) {
-
-
-
-//        Log.d("Insert: ", "Inserting ..");
-//        db.addProfile(new Profile("profile1", 96.2, 12.5));
-//        db.dropTables();
-        Log.d("Insert Timer: ", "Inserting ..");
-
-        //db.addTimer(new Timer(1, 10, Calendar.getInstance(TimeZone.getTimeZone("UTC"))));
-        //db.addTimer(new Timer(0, 14, Calendar.getInstance(TimeZone.getTimeZone("UTC"))));
-
-        List<Profile> profiles = db.getAllProfiles();
-        for (Profile p : profiles) {
-            String log = "Id: " + p.getProfileId() + " ,Name: " + p.getName() + " ,Temp: " + p.getTemperature() + " ,Humidity: " + p.getHumidity();
-            // Writing Contacts to log
-            Log.d("Name: ", log);
-        }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
+
 
     public void sendRequest(){
 
@@ -198,11 +200,6 @@ public class MainActivity extends AppCompatActivity {
         humidityView.setText((ParseJSON.humidity[0]));
 
     }
-
-//    @Override
-//    public void onClick(View v) {
-//        sendRequest();
-//    }
 
 }
 

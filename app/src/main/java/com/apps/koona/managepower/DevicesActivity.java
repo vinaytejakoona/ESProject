@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -32,7 +34,7 @@ public class DevicesActivity extends AppCompatActivity {
     TextView deviceIdView;
     TextView deviceLabelView;
     Button deleteButton;
-    ToggleButton toggleButton;
+    Switch toggleButton;
     LinearLayout linearLayout;
 
     protected void onResume() {
@@ -82,36 +84,40 @@ public class DevicesActivity extends AppCompatActivity {
             //deviceLabelView.setInputType(0x00000001);
             deviceLabelView.setText(devicesList.get(i).getDeviceLabel());
 
-            toggleButton = new ToggleButton(this);
-            toggleButton.setSelected(false);
 
-            toggleButton.setOnClickListener(new View.OnClickListener()
-            {
+
+
+            toggleButton = new Switch(this);
+            toggleButton.setSelected(false);
+            toggleButton.setId(devicesList.get(i).getDeviceId()+3000);
+
+
+
+            toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
                 @Override
-                public void onClick(View v)
-                {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     final String on_off_val;
-                    // your click actions go here
-                    if(toggleButton.isChecked()){
-                       on_off_val = "1";
+                    if(isChecked) {
+                        on_off_val = "1";
                     }
                     else{
-                       on_off_val = "0";
+                        on_off_val = "0";
                     }
 
-                    final String device_id_val = deviceIdView.getText().toString();
+                    final String device_id_val = Integer.toString(buttonView.getId()-3000);
 
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    Toast.makeText(DevicesActivity.this,response,Toast.LENGTH_LONG).show();
+                                    Toast.makeText(DevicesActivity.this,response,Toast.LENGTH_SHORT).show();
                                 }
                             },
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Toast.makeText(DevicesActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                                    Toast.makeText(DevicesActivity.this,error.toString(),Toast.LENGTH_SHORT).show();
                                 }
                             }){
                         @Override
@@ -126,9 +132,11 @@ public class DevicesActivity extends AppCompatActivity {
                     RequestQueue requestQueue = Volley.newRequestQueue(DevicesActivity.this);
                     requestQueue.add(stringRequest);
 
-                    Log.d("onclick ",on_off_val+" "+device_id_val+" sent to server");
+                    Log.d("onclick ",device_id_val+" "+on_off_val+" sent to server");
                 }
+
             });
+
 
             linearLayout = new LinearLayout(this);
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -22,11 +23,13 @@ import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String JSON_URL = "http://192.168.43.89/LiveData.php";
+    public static final String JSON_URL = "http://192.168.1.101/LiveData.php";
 
-    private Button buttonGet;
+    private Button refresh_button;
 
-    private ListView listView;
+
+
+    //private ListView listView;
 
     Handler h;
 
@@ -37,12 +40,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        buttonGet = (Button) findViewById(R.id.buttonGet);
-//        buttonGet.setOnClickListener(this);
-        listView = (ListView) findViewById(R.id.listView);
+        refresh_button = (Button) findViewById(R.id.buttonGet);
+
+        refresh_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                sendRequest();
+               // showJSON("{\"result\":[{\"temperature\":\"12\",\"milliseconds\":\"11\",\"timestamp\":\"2016-10-20 11:10:59\",\"humidity\":\"17\"}]}");
+                // Start NewActivity.class
+                // Intent nextIntent = new Intent(MainActivity.this,ProfilesActivity.class);
+                // startActivity(nextIntent);
+            }
+        });
+
+        //listView = (ListView) findViewById(R.id.listView);
 
         h= new Handler();
-        delay = 2000; //milliseconds
+        delay = 5000; //milliseconds
 
         h.postDelayed(new Runnable(){
             public void run(){
@@ -142,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void sendRequest(){
+    public void sendRequest(){
 
         StringRequest stringRequest = new StringRequest(JSON_URL,
                 new Response.Listener<String>() {
@@ -174,11 +187,16 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void showJSON(String json){
+    public void showJSON(String json){
         ParseJSON pj = new ParseJSON(json);
         pj.parseJSON();
-        CustomList cl = new CustomList(this, ParseJSON.milliseconds, ParseJSON.timestamps, ParseJSON.temperatures);
-        listView.setAdapter(cl);
+        //CustomList cl = new CustomList(this, ParseJSON.milliseconds, ParseJSON.timestamps, ParseJSON.temperatures);
+        //listView.setAdapter(cl);
+        TextView temperatureView = (TextView) findViewById(R.id.temperature);
+        TextView humidityView = (TextView) findViewById(R.id.humidity);
+        temperatureView.setText(ParseJSON.temperatures[0]);
+        humidityView.setText((ParseJSON.humidity[0]));
+
     }
 
 //    @Override

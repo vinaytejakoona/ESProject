@@ -22,6 +22,7 @@
     <string name="device_name">Device Name</string>
     <string name="add_timer">Add Timer</string>
     <string name="add_device">Add Device</string>
+    <string name="refresh">Refresh</string>
     <string-array name="on_off_options">
         <item>ON</item>
         <item>OFF</item>

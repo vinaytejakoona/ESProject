@@ -13,11 +13,13 @@ public class ParseJSON {
     public static String[] temperatures;
     public static String[] timestamps;
     public static String[] milliseconds;
+    public static String[] humidity;
 
     public static final String JSON_ARRAY = "result";
     public static final String KEY_TEMPERATURE = "temperature";
     public static final String KEY_TIMESTAMP = "timestamp";
     public static final String KEY_MILLISECONDS = "milliseconds";
+    public static final String KEY_HUMIDITY = "humidity";
 
     private JSONArray result = null;
 
@@ -32,12 +34,13 @@ public class ParseJSON {
         JSONObject jsonObject=null;
         try {
             jsonObject = new JSONObject(json);
-            //jsonObject = new JSONObject("{result:[{\"temperature\":\"25\",\"milliseconds\":\"1\",\"timestamp\":\"2016-10-19 23:18:20\"},{\"temperature\":\"25\",\"milliseconds\":\"2\",\"timestamp\":\"2016-10-19 23:21:02\"}]}");
+            //jsonObject = new JSONObject("{\"result\":[{\"temperature\":\"12\",\"milliseconds\":\"11\",\"timestamp\":\"2016-10-20 11:10:59\",\"humidity\":\"17\"}]}");
             result = jsonObject.getJSONArray(JSON_ARRAY);
 
             temperatures = new String[result.length()];
             timestamps = new String[result.length()];
             milliseconds = new String[result.length()];
+            humidity = new String[result.length()];
 
 
             for(int i=0;i<result.length();i++){
@@ -45,6 +48,7 @@ public class ParseJSON {
                 temperatures[i] = jo.getString(KEY_TEMPERATURE);
                 timestamps[i] = jo.getString(KEY_TIMESTAMP);
                 milliseconds[i] = jo.getString(KEY_MILLISECONDS);
+                humidity[i]=jo.getString(KEY_HUMIDITY);
 
             }
 

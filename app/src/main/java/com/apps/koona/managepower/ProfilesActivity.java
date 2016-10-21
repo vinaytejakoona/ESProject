@@ -36,6 +36,7 @@ public class ProfilesActivity extends AppCompatActivity {
     EditText temperature;
     EditText humidity;
     SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     public static final String KEY_TEMPERATURE = "temperature";
     public static final String KEY_HUMIDITY = "humidity";
@@ -48,10 +49,15 @@ public class ProfilesActivity extends AppCompatActivity {
         REGISTER_URL = "http://"+ipaddr+"/SetProfile.php";
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
+
         setProfileButton = (Button) findViewById(R.id.new_profile);
 
         temperature=(EditText)findViewById(R.id.temperature);
         humidity=(EditText)findViewById(R.id.humidity);
+
+        temperature.setText(preferences.getString(KEY_TEMPERATURE,"temperature"));
+        humidity.setText(preferences.getString(KEY_HUMIDITY,"humidity"));
 
 //                Toast.makeText(ProfilesActivity.this,temperature.getText().toString()+" "+humidity.getText().toString(),Toast.LENGTH_LONG).show();
 
@@ -60,6 +66,9 @@ public class ProfilesActivity extends AppCompatActivity {
 
             public void onClick(View arg0) {
                 if(isNetworkAvailable()){
+                    editor.putString(KEY_TEMPERATURE, temperature.getText().toString());
+                    editor.putString(KEY_HUMIDITY, humidity.getText().toString());
+                    editor.commit();
                     sendRequest();
                 }
                 else{

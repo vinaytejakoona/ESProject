@@ -2,9 +2,11 @@ package com.apps.koona.managepower;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -41,8 +43,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DatabaseHandler db = new DatabaseHandler(this);
+
+      //  db.dropTables();
+
         String ipaddr = getResources().getString(R.string.ipaddr);
         JSON_URL = "http://"+ipaddr+"/LiveData.php";
+
+
 
         refresh_button = (Button) findViewById(R.id.buttonGet);
 
@@ -74,10 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 h.postDelayed(this, delay);
             }
         }, delay);
-
-
-        DatabaseHandler db = new DatabaseHandler(this);
-
 
         Button profile_button = (Button) findViewById(R.id.profiles);
 

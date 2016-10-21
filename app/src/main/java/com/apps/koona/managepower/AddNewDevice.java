@@ -25,7 +25,7 @@ public class AddNewDevice extends AppCompatActivity {
         add_device_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-                Device device = new Device(deviceLabel.getText().toString());
+                Device device = new Device(deviceLabel.getText().toString(),0);
                 db.addDevice(device);
                 Toast.makeText(getApplicationContext(),
                         "New Device Added",

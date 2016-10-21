@@ -1,5 +1,5 @@
 <resources>
-    <string name="ipaddr"> 10.15.24.213 </string>
+    <string name="ipaddr">10.0.0.11 </string>
     <string name="app_name">ManagePower</string>
     <string name="light"> Light </string>
     <string name="profile"> Profile </string>

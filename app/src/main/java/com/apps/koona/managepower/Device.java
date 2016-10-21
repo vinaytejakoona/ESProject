@@ -6,6 +6,7 @@ package com.apps.koona.managepower;
 
 public class Device {
     int deviceId;
+    int onOff;
     String deviceLabel;
     static int numberOfDevices=0;
 
@@ -25,15 +26,25 @@ public class Device {
         this.deviceLabel = deviceLabel;
     }
 
+    public int getOnOff() {
+        return onOff;
+    }
+
+    public void setOnOff(int onOff) {
+        this.onOff = onOff;
+    }
+
     public Device(){
         deviceLabel="device";
+
         numberOfDevices++;
 
 
     }
 
-    public Device(String deviceLabel) {
+    public Device(String deviceLabel,int onOff) {
         numberOfDevices++;
+        this.onOff=onOff;
         this.deviceLabel = deviceLabel;
     }
 }

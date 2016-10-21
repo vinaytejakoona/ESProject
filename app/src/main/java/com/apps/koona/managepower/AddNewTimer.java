@@ -2,13 +2,11 @@ package com.apps.koona.managepower;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
+
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.text.InputType;
+
 import android.util.Log;
-import android.view.MotionEvent;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,33 +23,19 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.apps.koona.managepower.R.id.setdate;
-import static com.apps.koona.managepower.R.id.settime;
-
 
 public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
@@ -80,6 +64,8 @@ public class AddNewTimer extends AppCompatActivity  implements DatePickerDialog.
 
         String ipaddr = getResources().getString(R.string.ipaddr);
         REGISTER_URL = "http://"+ipaddr+"/dbConnect.php";
+
+
 
         calendar = Calendar.getInstance(TimeZone.getDefault());
 

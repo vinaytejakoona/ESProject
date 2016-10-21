@@ -1,5 +1,7 @@
 package com.apps.koona.managepower;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,12 +39,18 @@ public class DevicesActivity extends AppCompatActivity {
     Switch toggleButton;
     LinearLayout linearLayout;
 
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
     protected void onResume() {
         super.onResume();
         setContentView(R.layout.activity_devices);
 
         String ipaddr = getResources().getString(R.string.ipaddr);
         REGISTER_URL = "http://"+ipaddr+"/OnOff.php";
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
 
         Log.d("devices activity","");
         DatabaseHandler db= new DatabaseHandler(getApplicationContext());
@@ -88,7 +96,13 @@ public class DevicesActivity extends AppCompatActivity {
 
 
             toggleButton = new Switch(this);
-            toggleButton.setSelected(false);
+            if(devicesList.get(i).getOnOff()==1){
+                toggleButton.setChecked(true);
+            }
+            else{
+                toggleButton.setChecked(false);
+            }
+
             toggleButton.setId(devicesList.get(i).getDeviceId()+3000);
 
 
@@ -98,14 +112,25 @@ public class DevicesActivity extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     final String on_off_val;
+                    int onOff;
+
                     if(isChecked) {
                         on_off_val = "1";
+                        onOff=1;
                     }
                     else{
                         on_off_val = "0";
+                        onOff=0;
                     }
 
                     final String device_id_val = Integer.toString(buttonView.getId()-3000);
+                    DatabaseHandler db = new DatabaseHandler(DevicesActivity.this);
+
+
+                    Device device = new Device("",onOff);
+                    device.setDeviceId(buttonView.getId()-3000);
+                    db.updateDevice(device);
+
 
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
                             new Response.Listener<String>() {
